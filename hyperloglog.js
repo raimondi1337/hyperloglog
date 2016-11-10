@@ -124,12 +124,24 @@ function HyperLogLog(n) {
                 }
                 sum_of_inverses += Math.pow(2, -bucket);
             }
+        },
+
+        hash: function(str){
+            var a = 5381;
+            var b = 7171;
+            var c = 9314;
+            var d = 3322;
+            var len = str.length;
+            while(len--) a=((a << 5) + a) + str.charCodeAt(len);
+            var len = str.length;
+            while(len--) b=((b << 5) + b) + str.charCodeAt(len);
+            var len = str.length;
+            while(len--) c=((c << 5) + c) + str.charCodeAt(len);
+            var len = str.length;
+            while(len--) d=((d << 5) + d) + str.charCodeAt(len);
+            return [a,b,c,d];
         }
     };
 
     return self;
 };
-
-module.exports = HyperLogLog;
-
-module.exports.hash = require('murmurhash3').murmur128Sync;
